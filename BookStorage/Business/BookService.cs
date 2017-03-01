@@ -26,12 +26,14 @@ namespace Business
             }
 
             book.Id = 0;
+            var genres = book.Genres;
+            book.Genres.Clear();
             _bookStorageContext.Books.Add(book);
             _bookStorageContext.SaveChanges();
 
-            if (book.Genres != null && book.Genres.Count > 0)
+            if (genres != null && genres.Count > 0)
             {
-                foreach(var genre in book.Genres)
+                foreach(var genre in genres)
                 {
                     var dbGenre = _bookStorageContext.Genres.Where(g => g.Id == genre.Id).FirstOrDefault();
                     if (dbGenre == null)
