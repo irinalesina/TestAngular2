@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business
 {
@@ -10,7 +11,8 @@ namespace Business
     {
         public List<Book> GetAll()
         {
-            return _bookStorageContext.Books.ToList();
+            var books = _bookStorageContext.Books.ToList();
+            return books;
         }
 
         public Book Get(int id)

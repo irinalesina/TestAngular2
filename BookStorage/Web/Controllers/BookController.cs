@@ -16,7 +16,8 @@ namespace Web.Controllers
         [HttpGet("[action]")]
         public IEnumerable<Book> GetAll()
         {
-            return _bookService.GetAll();
+            var books = _bookService.GetAll();
+            return books;
         }
     }
 }

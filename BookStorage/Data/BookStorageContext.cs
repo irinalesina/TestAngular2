@@ -5,10 +5,8 @@ namespace Data
 {
     public class BookStorageContext : DbContext
     {
-        public BookStorageContext(DbContextOptions<BookStorageContext> options) : base(options) { }
-
-        public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<Genre> Genres { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +22,11 @@ namespace Data
                 .HasOne(pt => pt.Genre)
                 .WithMany(t => t.Links_BookGenre)
                 .HasForeignKey(pt => pt.GenreId);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=localhost;Database=BookStorage;Trusted_Connection=True;");
         }
     }
 }
