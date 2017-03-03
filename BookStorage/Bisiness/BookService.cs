@@ -3,35 +3,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data.Entity;
-using Microsoft.EntityFrameworkCore;
+using Data.Repository;
+using Bisiness;
 
 namespace Business
 {
-    public class BookService : BaseService, IBookService
+    public class BookService : IBookService
     {
+        IRepository<Book> _bookRepository = RepositoryFactory.BookRepository;
         public List<Book> GetAll()
         {
-            var books = _bookStorageContext.Books.ToList();
+            var books = _bookRepository.GetAll().ToList();
             return books;
         }
 
         public Book Get(int id)
         {
-            return _bookStorageContext.Books.Where(b => b.Id == id).FirstOrDefault();
+            return _bookRepository.Get(id);
         }
 
         public void Add(Book book)
         {
-            if (_bookStorageContext.Books.Any(b => b.Id == book.Id))
+            try
             {
-                throw new InvalidOperationException("Book already exist");
+                _bookRepository.Insert(book);
+            }
+            catch
+            {
+                throw;
             }
 
-            book.Id = 0;
             //var genres = book.Genres;
             //book.Genres.Clear();
-            _bookStorageContext.Books.Add(book);
-            _bookStorageContext.SaveChanges();
 
             //if (genres != null && genres.Count > 0)
             //{
@@ -52,12 +55,14 @@ namespace Business
 
         public void Delete(int id)
         {
-            var dbBook = _bookStorageContext.Genres.Where(b => b.Id == id).FirstOrDefault();
-            if (dbBook == null)
+            try
             {
-                throw new InvalidOperationException("Book dousn't exist");
+                _bookRepository.Delete(_bookRepository.Get(id));
             }
-            _bookStorageContext.Genres.Remove(dbBook);
+            catch
+            {
+                throw;
+            }
         }
     }
 }

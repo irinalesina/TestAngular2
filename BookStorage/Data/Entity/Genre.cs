@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entity
 {
-    public class Genre
+    [Table("Genre")]
+    public class Genre : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

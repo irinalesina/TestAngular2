@@ -9,14 +9,12 @@ namespace Data
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Link_BookGenre> Link_BookGenres { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Link_BookGenre>().HasKey(item => new { item.BookId, item.GenreId });
-        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=BookStorage;Trusted_Connection=True;");
         }
     }
+
 }

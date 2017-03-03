@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Data.Entity
 {
-    public class Link_BookGenre
+    [Table("Link_BookGenre")]
+    public class Link_BookGenre : BaseEntity
     {
         public int BookId { get; set; }
         public int GenreId { get; set; }

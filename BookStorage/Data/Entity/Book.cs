@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Data.Entity
 {
-    public class Book
+    [Table("Book")]
+    public class Book : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Text { get; set; }
         public int Year { get; set; }
