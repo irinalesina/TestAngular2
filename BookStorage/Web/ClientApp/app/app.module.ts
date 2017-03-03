@@ -5,14 +5,14 @@ import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { BookComponent } from './components/book/book.component';
-import { CounterComponent } from './components/counter/counter.component';
+import { GenreComponent } from './components/genre/genre.component';
 
 @NgModule({
     bootstrap: [ AppComponent ],
     declarations: [
         AppComponent,
         NavMenuComponent,
-        CounterComponent,
+        GenreComponent,
         BookComponent,
         HomeComponent
     ],
@@ -21,7 +21,7 @@ import { CounterComponent } from './components/counter/counter.component';
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
-            { path: 'counter', component: CounterComponent },
+            { path: 'genre', component: GenreComponent },
             { path: 'books', component: BookComponent },
             { path: '**', redirectTo: 'home' }
         ])
