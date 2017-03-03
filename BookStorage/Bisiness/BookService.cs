@@ -1,19 +1,35 @@
 ﻿using Business.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data.Entity;
 using Data.Repository;
 using Bisiness;
+using Bisiness.Entities;
+
 
 namespace Business
 {
     public class BookService : IBookService
     {
         IRepository<Book> _bookRepository = RepositoryFactory.BookRepository;
-        public List<Book> GetAll()
+        IRepository<Link_BookGenre> _link_BookGenreRepository = RepositoryFactory.Link_BookGenreRepository;
+        IRepository<Genre> _genreRepository = RepositoryFactory.GenreRepository;
+
+        public List<BookView> GetAll()
         {
-            var books = _bookRepository.GetAll().ToList();
+            var books = _bookRepository.GetAll().ToList()
+                .Join(_link_BookGenreRepository.GetAll(), b => b.Id, lbg => lbg.BookId, (b, lbg) => new { book = b, genreId = lbg.GenreId })
+                .Join(_genreRepository.GetAll(), b => b.genreId, g => g.Id, (b, g) => new { book = b.book, genre = g })
+                .GroupBy(b => b.book, b => b.genre)
+                .Select(b => new BookView()
+                {
+                    Id = b.Key.Id,
+                    Name = b.Key.Name,
+                    Text = b.Key.Text,
+                    Year = b.Key.Year,
+                    Genres = b.Select(genre => genre.Name).ToList()
+                })
+                .ToList();
             return books;
         }
 
@@ -24,42 +40,29 @@ namespace Business
 
         public void Add(Book book)
         {
+            //change getted model
             try
             {
                 _bookRepository.Insert(book);
+                // add insert genres
             }
             catch
             {
                 throw;
             }
-
-            //var genres = book.Genres;
-            //book.Genres.Clear();
-
-            //if (genres != null && genres.Count > 0)
-            //{
-            //    foreach (var genre in genres)
-            //    {
-            //        var dbGenre = _bookStorageContext.Genres.Where(g => g.Id == genre.Id).FirstOrDefault();
-            //        if (dbGenre == null)
-            //        {
-            //            _bookStorageContext.Genres.Add(genre);
-            //            _bookStorageContext.SaveChanges();
-            //            dbGenre = genre;
-            //        }
-            //        book.Genres.Add(genre);
-            //    }
-            //}
-            //_bookStorageContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
             try
             {
+                foreach (var linkBookGenre in _link_BookGenreRepository.GetAll().Where(l => l.BookId == id).ToList())
+                {
+                    _link_BookGenreRepository.Delete(linkBookGenre);
+                }
                 _bookRepository.Delete(_bookRepository.Get(id));
             }
-            catch
+            catch 
             {
                 throw;
             }

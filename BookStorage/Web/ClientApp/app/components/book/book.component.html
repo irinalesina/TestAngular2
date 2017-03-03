@@ -20,7 +20,10 @@
             <td>{{ book.text }}</td>
             <td>{{ book.year }}</td>
             <td>{{ book.genres.toString() }}</td>
-            <td>add some actions...</td>
+            <td>
+                <a role="button" class="d-block" (click)="deleteBook(book.id)">delete</a> | 
+                <a role="button" class="d-block">!add edit!</a>
+            </td>
         </tr>
     </tbody>
 </table>

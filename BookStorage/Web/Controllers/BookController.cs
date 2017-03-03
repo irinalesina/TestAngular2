@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Data.Entity;
 using Business;
+using Bisiness.Entities;
+
 
 namespace Web.Controllers
 {
@@ -14,10 +12,24 @@ namespace Web.Controllers
         private static BookService _bookService = new BookService();
 
         [HttpGet("[action]")]
-        public IEnumerable<Book> GetAll()
+        public IEnumerable<BookView> GetAll()
         {
             var books = _bookService.GetAll();
             return books;
+        }
+
+        [HttpDelete("[action]/{id}")]
+        public bool Delete([FromRoute] int id)
+        {
+            try
+            {
+                _bookService.Delete(id);
+                return true; ;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
