@@ -17,7 +17,7 @@ namespace Business
 
         public List<BookView> GetAll()
         {
-            var books = _bookRepository.GetAll().ToList()
+            var books = _bookRepository.GetAll()
                 .Join(_link_BookGenreRepository.GetAll(), b => b.Id, lbg => lbg.BookId, (b, lbg) => new { book = b, genreId = lbg.GenreId })
                 .Join(_genreRepository.GetAll(), b => b.genreId, g => g.Id, (b, g) => new { book = b.book, genre = g })
                 .GroupBy(b => b.book, b => b.genre)
