@@ -25,26 +25,12 @@ namespace Business
 
         public void Add(Genre genre)
         {
-            try
-            {
-                _genreRepository.Insert(genre);
-            }
-            catch
-            {
-                throw;
-            }
+            _genreRepository.Insert(genre);
         }
 
         public void Delete(int id)
         {
-            try
-            {
-                _genreRepository.Delete(_genreRepository.Get(id));
-            }
-            catch
-            {
-                throw;
-            }
+            _genreRepository.Delete(_genreRepository.Get(id));
         }
     }
 }

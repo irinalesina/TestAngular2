@@ -41,31 +41,18 @@ namespace Business
         public void Add(Book book)
         {
             //change getted model
-            try
-            {
-                _bookRepository.Insert(book);
-                // add insert genres
-            }
-            catch
-            {
-                throw;
-            }
+            _bookRepository.Insert(book);
+            // add insert genres  
+
         }
 
         public void Delete(int id)
         {
-            try
+            foreach (var linkBookGenre in _link_BookGenreRepository.GetAll().Where(l => l.BookId == id).ToList())
             {
-                foreach (var linkBookGenre in _link_BookGenreRepository.GetAll().Where(l => l.BookId == id).ToList())
-                {
-                    _link_BookGenreRepository.Delete(linkBookGenre);
-                }
-                _bookRepository.Delete(_bookRepository.Get(id));
+                _link_BookGenreRepository.Delete(linkBookGenre);
             }
-            catch 
-            {
-                throw;
-            }
+            _bookRepository.Delete(_bookRepository.Get(id));
         }
     }
 }

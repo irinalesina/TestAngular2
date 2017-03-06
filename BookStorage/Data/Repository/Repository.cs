@@ -1,7 +1,6 @@
 ﻿using Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Data.Repository
@@ -16,9 +15,9 @@ namespace Data.Repository
             this.context = DataContextFactory.GetBookStorageContext();
             entities = context.Set<T>();
         }
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return entities.AsEnumerable();
+            return entities.AsQueryable();
         }
         public T Get(long id)
         {
