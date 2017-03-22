@@ -18,6 +18,13 @@ namespace WebApi.Controllers
             return books;
         }
 
+        [HttpGet("[action]/{id}")]
+        public BookView GetById(int id)
+        {
+            var book = _bookService.GetById(id);
+            return book;
+        }
+
         [HttpDelete("[action]/{id}")]
         public bool Delete([FromRoute] int id)
         {

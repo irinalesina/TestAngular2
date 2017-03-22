@@ -9,6 +9,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Bisiness", "Bisiness\Bisine
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebApi", "WebApi\WebApi.xproj", "{01FA69DB-94F5-4BEB-9A04-95014EEC5330}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "zzz", "zzz\zzz.xproj", "{7EE20722-F76C-474B-ABC4-9C83754FB009}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{01FA69DB-94F5-4BEB-9A04-95014EEC5330}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01FA69DB-94F5-4BEB-9A04-95014EEC5330}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01FA69DB-94F5-4BEB-9A04-95014EEC5330}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EE20722-F76C-474B-ABC4-9C83754FB009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EE20722-F76C-474B-ABC4-9C83754FB009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EE20722-F76C-474B-ABC4-9C83754FB009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EE20722-F76C-474B-ABC4-9C83754FB009}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

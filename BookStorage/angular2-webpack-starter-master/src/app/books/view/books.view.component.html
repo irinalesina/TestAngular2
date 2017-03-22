@@ -1,27 +1,15 @@
 <h1>Books</h1>
 
-<p *ngIf="!books"><em>Loading...</em></p>
+<p *ngIf="!book"><em>Loading...</em></p>
 
-<table class='table' *ngIf="books">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Text</th>
-        <th>Year</th>
-        <th>Genres</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let book of books">
-        <td>{{ book.name }}</td>
-        <td>{{ book.text }}</td>
-        <td>{{ book.year }}</td>
-        <td>{{ book.genres.toString() }}</td>
-        <td>
-            <a role="button" class="d-block" (click)="deleteBook(book.id)">delete</a> |
-            <a role="button" class="d-block">!add edit!</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div class='table' *ngIf="book">
+    <label>Id: <b>{{book.id}}</b> </label>
+    <br/>
+    <label>Name: <b>{{book.name}}</b> </label>
+    <br/>
+    <label>Text: <b>{{book.text}}</b> </label>
+    <br/>
+    <label>Year: <b>{{book.year}}</b> </label>
+    <br/>
+    <label>Genres: <b>{{book.genres.toString()}}</b> </label>
+</div>

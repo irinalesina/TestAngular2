@@ -1,26 +1,21 @@
 import { Component } from '@angular/core';
-import { Http } from '@angular/http';
+import {ApiService} from "../../shared/api.service";
+import {ActivatedRoute, Params} from "@angular/router";
+import {Book} from "../book.model";
+
 
 @Component({
-    selector: 'books/view',
+    selector: 'view',
     template: require('./books.view.component.html')
 })
 export class BooksViewComponent {
     public book: Book;
-    public http: Http;
+    private bookId: number;
 
-    constructor(http: Http) {
-        this.http = http;
-        http.get('/api/Book/').subscribe(result => {
+    constructor(private apiService: ApiService, private route: ActivatedRoute) {
+        this.bookId = route.snapshot.params['id'];
+        apiService.getById('Book/GetById', this.bookId).subscribe(result => {
             this.book = result.json();
         });
     }
-}
-
-interface Book {
-    id: number;
-    name: string;
-    text: string;
-    year: number;
-    genres: string[];
 }

@@ -1,8 +1,13 @@
-import { BooksGridComponent } from './grid/books.grid.component';
+import {BooksViewAllComponent} from "./view-all/books.view-all.component";
+import {BooksControlPanelComponent} from "./control-panel/books.control-panel.component";
+import {BooksViewComponent} from "./view/books.view.component";
+
 
 export const routes = [
-  { path: '', children: [
-    { path: '', component: BooksGridComponent },
-    // { path: 'child-detail', loadChildren: './+child-detail#ChildDetailModule' }
+  {
+      path: '', children: [
+          { path: '', component: BooksControlPanelComponent },
+          { path: 'view-all', component: BooksViewAllComponent },
+          { path: 'view/:id', component: BooksViewComponent }
   ]},
 ];

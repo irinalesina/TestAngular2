@@ -1,0 +1,28 @@
+<h1>All Books</h1>
+
+<p *ngIf="!books"><em>Loading...</em></p>
+
+<table class='table' *ngIf="books">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Text</th>
+        <th>Year</th>
+        <th>Genres</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let book of books">
+        <td>{{ book.name }}</td>
+        <td>{{ book.text }}</td>
+        <td>{{ book.year }}</td>
+        <td>{{ book.genres.toString() }}</td>
+        <td>
+            <button (click)="deleteBook(book.id)">delete</button>
+            <button [routerLink]=" ['../view', book.id] ">view detail</button>
+            <!--<button>edit</button>-->
+        </td>
+    </tr>
+    </tbody>
+</table>

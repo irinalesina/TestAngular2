@@ -8,7 +8,7 @@ namespace Business.Interfaces
     public interface IBookService
     {
         List<BookView> GetAll();
-        Book Get(int id);
+        BookView GetById(int id);
         void Add(Book book);
         void Delete(int id);
     }

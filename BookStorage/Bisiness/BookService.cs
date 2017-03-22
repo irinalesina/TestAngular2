@@ -33,9 +33,23 @@ namespace Business
             return books;
         }
 
-        public Book Get(int id)
+        public BookView GetById(int id)
         {
-            return _bookRepository.Get(id);
+            var book = _bookRepository.GetAll()
+                .Join(_link_BookGenreRepository.GetAll(), b => b.Id, lbg => lbg.BookId, (b, lbg) => new { book = b, genreId = lbg.GenreId })
+                .Join(_genreRepository.GetAll(), b => b.genreId, g => g.Id, (b, g) => new { book = b.book, genre = g })
+                .GroupBy(b => b.book, b => b.genre)
+                .Where(b => b.Key.Id == id)
+                .Select(b => new BookView()
+                {
+                    Id = b.Key.Id,
+                    Name = b.Key.Name,
+                    Text = b.Key.Text,
+                    Year = b.Key.Year,
+                    Genres = b.Select(genre => genre.Name).ToList()
+                })
+                .FirstOrDefault();
+            return book;
         }
 
         public void Add(Book book)
