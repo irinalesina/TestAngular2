@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Bisiness.Entities;
 using Business;
+using Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -12,30 +13,30 @@ namespace WebApi.Controllers
         private static BookService _bookService = new BookService();
 
         [HttpGet("[action]")]
-        public IEnumerable<BookView> GetAll()
+        public IActionResult GetAll()
         {
             var books = _bookService.GetAll();
-            return books;
+            return Ok(books);
         }
 
         [HttpGet("[action]/{id}")]
-        public BookView GetById(int id)
+        public IActionResult GetById(int id)
         {
             var book = _bookService.GetById(id);
-            return book;
+            return Ok(book);
         }
 
         [HttpDelete("[action]/{id}")]
-        public bool Delete([FromRoute] int id)
+        public IActionResult Delete([FromRoute] int id)
         {
             try
             {
                 _bookService.Delete(id);
-                return true; ;
+                return Ok(); ;
             }
             catch
             {
-                return false;
+                return BadRequest();
             }
         }
     }

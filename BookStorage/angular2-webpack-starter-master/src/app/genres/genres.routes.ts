@@ -8,6 +8,7 @@ export const routes = [
       path: '', children: [
         { path: '', component: GenresControlPanelComponent },
         { path: 'view-all', component: GenresViewAllComponent },
-        { path: 'edit/:id', component: GenresEditComponent }
+        { path: 'edit/:id', component: GenresEditComponent },
+        { path: 'new', component: GenresEditComponent }
   ]},
 ];

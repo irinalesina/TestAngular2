@@ -12,6 +12,6 @@ namespace Bisiness.Entities
         public string Name { get; set; }
         public string Text { get; set; }
         public int Year { get; set; }
-        public List<string> Genres { get; set; }
+        public List<GenreView> Genres { get; set; }
     }
 }

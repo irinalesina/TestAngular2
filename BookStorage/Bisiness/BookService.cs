@@ -5,29 +5,32 @@ using Data.Entity;
 using Data.Repository;
 using Bisiness;
 using Bisiness.Entities;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Business
 {
     public class BookService : IBookService
     {
-        IRepository<Book> _bookRepository = RepositoryFactory.BookRepository;
-        IRepository<Link_BookGenre> _link_BookGenreRepository = RepositoryFactory.Link_BookGenreRepository;
-        IRepository<Genre> _genreRepository = RepositoryFactory.GenreRepository;
+        private IRepository<Book> _bookRepository = RepositoryFactory.BookRepository;
+        private IRepository<Link_BookGenre> _link_BookGenreRepository = RepositoryFactory.Link_BookGenreRepository;
 
         public List<BookView> GetAll()
         {
             var books = _bookRepository.GetAll()
-                .Join(_link_BookGenreRepository.GetAll(), b => b.Id, lbg => lbg.BookId, (b, lbg) => new { book = b, genreId = lbg.GenreId })
-                .Join(_genreRepository.GetAll(), b => b.genreId, g => g.Id, (b, g) => new { book = b.book, genre = g })
-                .GroupBy(b => b.book, b => b.genre)
+                .Include(b => b.Links_BookGenre)
+                .ThenInclude(b => b.Genre)
                 .Select(b => new BookView()
                 {
-                    Id = b.Key.Id,
-                    Name = b.Key.Name,
-                    Text = b.Key.Text,
-                    Year = b.Key.Year,
-                    Genres = b.Select(genre => genre.Name).ToList()
+                    Id = b.Id,
+                    Name = b.Name,
+                    Text = b.Text,
+                    Year = b.Year,
+                    Genres = b.Links_BookGenre.Select(l => new GenreView()
+                    {
+                        Id = l.Genre.Id,
+                        Name = l.Genre.Name
+                    }).ToList()
                 })
                 .ToList();
             return books;
@@ -36,17 +39,20 @@ namespace Business
         public BookView GetById(int id)
         {
             var book = _bookRepository.GetAll()
-                .Join(_link_BookGenreRepository.GetAll(), b => b.Id, lbg => lbg.BookId, (b, lbg) => new { book = b, genreId = lbg.GenreId })
-                .Join(_genreRepository.GetAll(), b => b.genreId, g => g.Id, (b, g) => new { book = b.book, genre = g })
-                .GroupBy(b => b.book, b => b.genre)
-                .Where(b => b.Key.Id == id)
+                .Include(b => b.Links_BookGenre)
+                .ThenInclude(b => b.Genre)
+                .Where(b => b.Id == id)
                 .Select(b => new BookView()
                 {
-                    Id = b.Key.Id,
-                    Name = b.Key.Name,
-                    Text = b.Key.Text,
-                    Year = b.Key.Year,
-                    Genres = b.Select(genre => genre.Name).ToList()
+                    Id = b.Id,
+                    Name = b.Name,
+                    Text = b.Text,
+                    Year = b.Year,
+                    Genres = b.Links_BookGenre.Select(l => new GenreView()
+                    {
+                        Id = l.Genre.Id,
+                        Name = l.Genre.Name
+                    }).ToList()
                 })
                 .FirstOrDefault();
             return book;

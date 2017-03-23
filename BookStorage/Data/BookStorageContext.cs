@@ -9,7 +9,12 @@ namespace Data
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Link_BookGenre> Link_BookGenres { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Book>().HasKey(q => q.Id);
+            modelBuilder.Entity<Genre>().HasKey(q => q.Id);
+            modelBuilder.Entity<Link_BookGenre>().HasKey(q => q.Id);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

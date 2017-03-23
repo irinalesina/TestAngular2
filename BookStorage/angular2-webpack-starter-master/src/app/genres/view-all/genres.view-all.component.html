@@ -5,16 +5,19 @@
 <table class='table' *ngIf="genres">
     <thead>
     <tr>
+        <th>Id</th>
         <th>Name</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let genre of genres">
+        <td>{{ genre.id }}</td>
         <td>{{ genre.name }}</td>
         <td>
             <button (click)="deleteGenre(genre.id)">delete</button>
-            <!--<button>edit</button>-->
+            <button [routerLink]=" ['../edit', genre.id] "
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">edit</button>
         </td>
     </tr>
     </tbody>

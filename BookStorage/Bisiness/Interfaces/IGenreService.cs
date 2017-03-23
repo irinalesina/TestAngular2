@@ -6,10 +6,11 @@ namespace Business.Interfaces
 {
     public interface IGenreService
     {
-        List<Genre> GetAll();
-        Genre Get(int id);
+        List<GenreView> GetAll();
+        GenreView Get(int id);
         void Add(Genre genre);
         void Delete(int id);
+        void Update(int genreId, Genre genre);
     }
 }
 

@@ -28,14 +28,18 @@ export class ApiService {
 
     public add(url: string, data): Observable<Response> {
         let body = JSON.stringify(data);
-        console.log("Body: ", body);
         return this.http.post(this.baseApiRoute + url, body, this.getOptions());
+    }
+
+    public update(url: string, id: number, data): Observable<Response> {
+        let body = JSON.stringify(data);
+        return this.http.put(this.baseApiRoute + url + "/" + id, body, this.getOptions());
     }
 
     private getOptions(): RequestOptions {
         let opts: RequestOptions = new RequestOptions();
         opts.headers = new Headers();
-        opts.headers.append("Content-Type", "application/json; charset=utf-8");
+        opts.headers.append("Content-Type", "application/json");
         return opts;
     }
 };

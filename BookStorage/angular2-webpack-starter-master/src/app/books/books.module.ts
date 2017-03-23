@@ -7,14 +7,14 @@ import { routes } from './books.routes';
 import {ApiService} from "../shared/api.service";
 import {BooksViewAllComponent} from "./view-all/books.view-all.component";
 import {BooksControlPanelComponent} from "./control-panel/books.control-panel.component";
-import {BooksViewComponent} from "./view/books.view.component";
+import {BooksEditComponent} from "./edit/books.edit.component";
 
 
 @NgModule({
   declarations: [
       BooksControlPanelComponent,
       BooksViewAllComponent,
-      BooksViewComponent
+      BooksEditComponent
   ],
   imports: [
       CommonModule,
