@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using Bisiness.Entities;
-using Data.Entity;
+using WebApi.Data.Model;
+using WebApi.ViewModels;
 
-namespace Business.Interfaces
+
+namespace WebApi.Services.Interfaces
 {
     public interface IGenreService
     {

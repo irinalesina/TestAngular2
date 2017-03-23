@@ -1,6 +1,6 @@
 ﻿
 
-namespace Data.Entity
+namespace WebApi.Data.Model
 {
     public class BaseEntity
     {

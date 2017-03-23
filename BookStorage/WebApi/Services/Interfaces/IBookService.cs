@@ -1,9 +1,9 @@
-﻿using Bisiness.Entities;
-using Data.Entity;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using WebApi.Data.Model;
+using WebApi.ViewModels;
 
-namespace Business.Interfaces
+
+namespace WebApi.Services.Interfaces
 {
     public interface IBookService
     {

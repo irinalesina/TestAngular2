@@ -15,7 +15,6 @@ export class GenresEditComponent{
 
     constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
         this.genreId = route.snapshot.params['id'];
-        console.log("genreId: ", this.genreId);
         if(this.genreId != undefined) {
             this.title = "Edit Genre";
             apiService.getById('Genre/GetById', this.genreId).subscribe(result => {

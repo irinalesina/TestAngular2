@@ -1,25 +1,26 @@
-﻿using System;
-using Business.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using Data.Entity;
-using Data.Repository;
-using Bisiness;
-using Bisiness.Entities;
+using WebApi.Data;
+using WebApi.Data.Model;
+using WebApi.Services.Interfaces;
+using WebApi.ViewModels;
 
 
-namespace Business
+namespace WebApi.Services
 {
     public class GenreService : IGenreService
     {
-        private IRepository<Genre> _genreRepository = RepositoryFactory.GenreRepository;
-        private IRepository<Link_BookGenre> _link_BookGenreRepository = RepositoryFactory.Link_BookGenreRepository;
+        private BookStorageContext _dbContext;
+
+        public GenreService(BookStorageContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public List<GenreView> GetAll()
         {
-            return _genreRepository.GetAll()
+            return _dbContext.Genres
                 .Select(g => new GenreView()
                 {
                     Id = g.Id,
@@ -30,7 +31,7 @@ namespace Business
 
         public GenreView Get(int id)
         {
-            return _genreRepository.GetAll()
+            return _dbContext.Genres
                 .Where(g => g.Id == id)
                 .Select(g => new GenreView()
                 {
@@ -42,27 +43,30 @@ namespace Business
 
         public void Add(Genre genre)
         {
-            _genreRepository.Insert(genre);
+            _dbContext.Genres.Add(genre);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            foreach (var linkBookGenre in _link_BookGenreRepository.GetAll().Where(l => l.GenreId == id).ToList())
+            foreach (var linkBookGenre in _dbContext.Link_BookGenres.Where(l => l.GenreId == id).ToList())
             {
-                _link_BookGenreRepository.Delete(linkBookGenre);
+                _dbContext.Link_BookGenres.Remove(linkBookGenre);
+                _dbContext.SaveChanges();
             }
-            _genreRepository.Delete(_genreRepository.Get(id));
+            _dbContext.Genres.Remove(_dbContext.Genres.FirstOrDefault(g => g.Id == id));
+            _dbContext.SaveChanges();
         }
 
         public void Update(int genreId, Genre genre)
         {
-            var dbGenre = _genreRepository.Get(genreId);
+            var dbGenre = _dbContext.Genres.FirstOrDefault(g => g.Id == genreId);
             if (dbGenre == null)
             {
                 throw new InvalidDataException("Genre doesn't exist.");
             }
             dbGenre.Name = genre.Name;
-            _genreRepository.Update(dbGenre);
+            _dbContext.SaveChanges();
         }
     }
 }

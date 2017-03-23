@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace Data.Entity
+namespace WebApi.Data.Model
 {
     [Table("Link_BookGenre")]
     public class Link_BookGenre : BaseEntity

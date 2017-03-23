@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using WebApi.Data;
+using WebApi.Services;
+using WebApi.Services.Interfaces;
 
 
 namespace WebApi
@@ -42,6 +46,13 @@ namespace WebApi
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
+
+
+            services.AddDbContext<BookStorageContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IGenreService, GenreService>();
 
             services.AddMvc();
         }

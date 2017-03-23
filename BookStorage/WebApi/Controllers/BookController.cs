@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using Bisiness.Entities;
-using Business;
-using Data.Entity;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Data;
+using WebApi.Services.Interfaces;
 
 
 namespace WebApi.Controllers
@@ -10,7 +9,12 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     public class BookController : Controller
     {
-        private static BookService _bookService = new BookService();
+        private readonly IBookService _bookService;
+
+        public BookController(IBookService bookService)
+        {
+            _bookService = bookService;
+        }
 
         [HttpGet("[action]")]
         public IActionResult GetAll()

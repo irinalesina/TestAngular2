@@ -30,7 +30,6 @@ export class BooksViewAllComponent {
 
 
     public getGenresView(genres: Genre[]): string {
-        console.log("g: ", genres);
         let genresStr: string = '';
         for(let genre of genres){
             genresStr += genre.name + ' ';

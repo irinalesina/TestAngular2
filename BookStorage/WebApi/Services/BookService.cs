@@ -1,23 +1,26 @@
-﻿using Business.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Data.Entity;
-using Data.Repository;
-using Bisiness;
-using Bisiness.Entities;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Data;
+using WebApi.Data.Model;
+using WebApi.Services.Interfaces;
+using WebApi.ViewModels;
 
 
-namespace Business
+namespace WebApi.Services
 {
     public class BookService : IBookService
     {
-        private IRepository<Book> _bookRepository = RepositoryFactory.BookRepository;
-        private IRepository<Link_BookGenre> _link_BookGenreRepository = RepositoryFactory.Link_BookGenreRepository;
+        private readonly BookStorageContext _dbContext;
+
+        public BookService(BookStorageContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public List<BookView> GetAll()
         {
-            var books = _bookRepository.GetAll()
+            var books = _dbContext.Books
                 .Include(b => b.Links_BookGenre)
                 .ThenInclude(b => b.Genre)
                 .Select(b => new BookView()
@@ -38,7 +41,7 @@ namespace Business
 
         public BookView GetById(int id)
         {
-            var book = _bookRepository.GetAll()
+            var book = _dbContext.Books
                 .Include(b => b.Links_BookGenre)
                 .ThenInclude(b => b.Genre)
                 .Where(b => b.Id == id)
@@ -61,18 +64,17 @@ namespace Business
         public void Add(Book book)
         {
             //change getted model
-            _bookRepository.Insert(book);
             // add insert genres  
 
         }
 
         public void Delete(int id)
         {
-            foreach (var linkBookGenre in _link_BookGenreRepository.GetAll().Where(l => l.BookId == id).ToList())
+            foreach (var linkBookGenre in _dbContext.Link_BookGenres.Where(l => l.BookId == id).ToList())
             {
-                _link_BookGenreRepository.Delete(linkBookGenre);
+                _dbContext.Link_BookGenres.Remove(linkBookGenre);
             }
-            _bookRepository.Delete(_bookRepository.Get(id));
+            _dbContext.Books.Remove(_dbContext.Books.FirstOrDefault(b => b.Id == id));
         }
     }
 }

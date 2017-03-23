@@ -1,5 +1,5 @@
 ﻿
-namespace Bisiness.Entities
+namespace WebApi.ViewModels
 {
     public class GenreView
     {

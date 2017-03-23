@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Business;
-using Data.Entity;
-using Bisiness.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebApi.Data;
+using WebApi.Data.Model;
+using WebApi.Services;
+using WebApi.Services.Interfaces;
+using WebApi.ViewModels;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     public class GenreController : Controller
     {
-        private static GenreService _genreService = new GenreService();
+        private readonly IGenreService _genreService;
 
+        public GenreController(IGenreService genreService)
+        {
+            _genreService = genreService;
+        }
 
         [HttpGet("[action]")]
         public IActionResult GetAll()
