@@ -1,8 +1,9 @@
 <h1>All Genres</h1>
 
-<p *ngIf="!genres"><em>Loading...</em></p>
+<button [routerLink]=" ['./new'] ">Add new</button><br/><br/>
 
-<table class='table' *ngIf="genres">
+<p *ngIf="!genres"><em>Loading...</em></p>
+<table class='table' *ngIf="genres" border="1" cellspacing="3" cellpadding="5">
     <thead>
     <tr>
         <th>Id</th>
@@ -16,8 +17,7 @@
         <td>{{ genre.name }}</td>
         <td>
             <button (click)="deleteGenre(genre.id)">delete</button>
-            <button [routerLink]=" ['../edit', genre.id] "
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">edit</button>
+            <button [routerLink]=" ['../edit', genre.id] ">edit</button>
         </td>
     </tr>
     </tbody>

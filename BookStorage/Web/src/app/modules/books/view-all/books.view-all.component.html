@@ -2,7 +2,9 @@
 
 <p *ngIf="!books"><em>Loading...</em></p>
 
-<table class='table' *ngIf="books">
+<button [routerLink]=" ['./new'] ">Add new</button><br/><br/>
+
+<table class='table' *ngIf="books" border="1" cellspacing="3" cellpadding="5">
     <thead>
     <tr>
         <th>Name</th>

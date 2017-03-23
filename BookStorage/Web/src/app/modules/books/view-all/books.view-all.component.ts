@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
-import {ApiService} from "../../shared/api.service";
 import {Book} from "../book.model";
+import {ApiService} from "../../../shared/api.service";
 import {Genre} from "../../genres/genre.model";
 
 

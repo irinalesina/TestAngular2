@@ -4,15 +4,13 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 
 import {routes} from './genres.routes';
-import {ApiService} from "../shared/api.service";
-import {GenresControlPanelComponent} from "./control-panel/genres.control-panel.component";
 import {GenresViewAllComponent} from "./view-all/genres.view-all.component";
 import {GenresEditComponent} from "./edit/genres.edit.component";
+import {ApiService} from "../../shared/api.service";
 
 
 @NgModule({
     declarations: [
-        GenresControlPanelComponent,
         GenresViewAllComponent,
         GenresEditComponent
     ],

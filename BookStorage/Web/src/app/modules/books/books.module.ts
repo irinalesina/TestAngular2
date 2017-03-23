@@ -4,15 +4,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { routes } from './books.routes';
-import {ApiService} from "../shared/api.service";
 import {BooksViewAllComponent} from "./view-all/books.view-all.component";
-import {BooksControlPanelComponent} from "./control-panel/books.control-panel.component";
 import {BooksEditComponent} from "./edit/books.edit.component";
+import {ApiService} from "../../shared/api.service";
 
 
 @NgModule({
   declarations: [
-      BooksControlPanelComponent,
       BooksViewAllComponent,
       BooksEditComponent
   ],
