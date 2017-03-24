@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {HttpModule, RequestOptions} from '@angular/http';
 import {
   NgModule,
   ApplicationRef
@@ -14,6 +14,7 @@ import {
   RouterModule,
   PreloadAllModules
 } from '@angular/router';
+import { ConfigModule, ConfigLoader, ConfigStaticLoader } from 'ng2-config';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -45,6 +46,10 @@ type StoreType = {
   disposeOldHosts: () => void
 };
 
+export function configFactory() {
+  return new ConfigStaticLoader('/custom.config.json');
+}
+
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
@@ -58,6 +63,10 @@ type StoreType = {
     XLargeDirective
   ],
   imports: [ // import Angular's modules
+    ConfigModule.forRoot({
+      provide: ConfigLoader,
+      useFactory: (configFactory)
+    }),
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -80,7 +89,6 @@ export class AppModule {
     if (!store || !store.state) {
       return;
     }
-    console.log('HMR store', JSON.stringify(store, null, 2));
     // set state
     this.appState._state = store.state;
     // set input values

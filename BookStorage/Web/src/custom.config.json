@@ -1,0 +1,5 @@
+{
+  "apiUrl": {
+    "dev": "http://localhost:5000/api/"
+  }
+}
